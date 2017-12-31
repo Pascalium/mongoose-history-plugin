@@ -204,7 +204,7 @@ let historyPlugin = (options = {}) => {
                     let diff = jdf.diff(previousObject, currentObject);
 
                     if (diff || pluginOptions.noDiffSave) {
-                        return Model.findOne({collectionName: this.constructor.modelName, collectionId: this ._id}).sort("-version").select({version: 1}).then(lastHistory => {
+                        return Model.findOne({collectionName: this.constructor.modelName, collectionId: this ._id}).sort("-timestamp").select({version: 1}).then(lastHistory => {
                             let obj = {};
                             obj.collectionName = this.constructor.modelName;
                             obj.collectionId = this._id;
