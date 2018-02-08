@@ -256,7 +256,7 @@ let historyPlugin = (options = {}) => {
             options.find = options.find || {};
             Object.assign(options.find, {collectionName: this.constructor.modelName, collectionId: this._id});
 
-            options.sort = options.sort || "-version";
+            options.sort = options.sort || "-timestamp";
 
             return query('find', options);
         };
@@ -266,7 +266,7 @@ let historyPlugin = (options = {}) => {
             options.find = options.find || {};
             Object.assign(options.find, {collectionName: this.constructor.modelName, collectionId: this._id, version: version});
 
-            options.sort = options.sort || "-version";
+            options.sort = options.sort || "-timestamp";
 
             return query('findOne', options);
         };
@@ -274,7 +274,7 @@ let historyPlugin = (options = {}) => {
         // versions.get
         schema.methods.getVersion = function (version2get, includeObject = true) {
             return this.getDiffs({
-                sort: 'version'
+                sort: 'timestamp'
             }).then(histories => {
                 let lastVersion = histories[histories.length - 1],
                     firstVersion = histories[0],
@@ -329,7 +329,7 @@ let historyPlugin = (options = {}) => {
 
         // versions.find
         schema.methods.getVersions = function (options = {}, includeObject = true) {
-            options.sort = options.sort || "version";
+            options.sort = options.sort || "timestamp";
 
             return this.getDiffs(options).then(histories => {
                 if (!includeObject) {
